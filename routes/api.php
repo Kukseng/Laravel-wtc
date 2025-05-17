@@ -10,16 +10,7 @@ use App\Http\Controllers\RequestOrderController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DashboardController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -35,30 +26,30 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
     
-    // Cart routes (customer)
+    // Cart  (customer)
     Route::get('/cart', [CartController::class, 'index']);
     Route::post('/cart/add', [CartController::class, 'addItem']);
     Route::put('/cart/items/{id}', [CartController::class, 'updateItem']);
     Route::delete('/cart/items/{id}', [CartController::class, 'removeItem']);
     Route::delete('/cart/clear', [CartController::class, 'clear']);
     
-    // Order routes (customer)
+    // Order  (customer)
     Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
     Route::get('/payment-methods', [OrderController::class, 'getPaymentMethods']);
     
-    // Notification routes (all authenticated users)
+    // Notification (all authenticated users)
     Route::get('/notifications', [NotificationController::class, 'index']);
     Route::get('/notifications/unread', [NotificationController::class, 'unread']);
     Route::put('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
     Route::put('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
     
-    // Dashboard routes (role-specific)
+    // Dashboard (role-specific)
     Route::get('/dashboard/customer', [DashboardController::class, 'customerDashboard']);
     
-    // MOVED ALL ADMIN ROUTES OUTSIDE MIDDLEWARE FOR TESTING
+    
     // Product management
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products/{id}', [ProductController::class, 'update']);
@@ -74,14 +65,14 @@ Route::middleware('auth:sanctum')->group(function () {
     // Admin dashboard
     Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard']);
     
-    // Warehouse manager routes - MOVED OUTSIDE MIDDLEWARE FOR TESTING
+    
     // Request orders approval
     Route::put('/request-orders/{id}/warehouse-approval', [RequestOrderController::class, 'warehouseApproval']);
     
     // Warehouse dashboard
     Route::get('/dashboard/warehouse', [DashboardController::class, 'warehouseDashboard']);
     
-    // Staff routes - MOVED OUTSIDE MIDDLEWARE FOR TESTING
+  
     // Order processing
     Route::put('/orders/{id}/status', [OrderController::class, 'updateStatus']);
     Route::put('/orders/{id}/payment', [OrderController::class, 'updatePaymentStatus']);
